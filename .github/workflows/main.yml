@@ -1,0 +1,37 @@
+name: Build Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'Optional message for the run'
+        required: false
+        default: 'Manual run'
+        
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up environment
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y make gcc git texinfo gzip squashfs-tools
+          sudo apt-get install autoconf automake libtool
+      
+
+      - name: Run Build
+        run: |
+          cd /home/runner/work/E900V22D-CoreELEC/E900V22D-CoreELEC
+          sh build.sh
+          
+      - name: Export Image
+        uses: actions/upload-artifact@v4
+        with:
+          name: Image & SHA256
+          path: |
+            /home/runner/work/E900V22D-CoreELEC/E900V22D-CoreELEC/*.img.gz
+            /home/runner/work/E900V22D-CoreELEC/E900V22D-CoreELEC/*.img.gz.sha256
