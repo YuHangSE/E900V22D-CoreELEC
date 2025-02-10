@@ -1,0 +1,16 @@
+# table CMCC-REMOTE, type: NEC
+0x22dc KEY_POWER # <power>
+0x228d KEY_CONFIG # <config> # config, info # settings button
+0x22ca KEY_UP
+0x22c1 KEY_RIGHT
+0x22d2 KEY_DOWN
+0x2299 KEY_LEFT
+0x2282 KEY_MENU # <menu> # IPTV channel list # menu button
+0x2295 KEY_ESC # <escape>
+0x22ce KEY_ENTER 
+0x2288 KEY_HOME # <home>
+0x2280 KEY_VOLUMEUP
+0x2281 KEY_VOLUMEDOWN
+0x2285 KEY_PAGEUP
+0x2286 KEY_PAGEDOWN
+0x22f0 KEY_MUTE

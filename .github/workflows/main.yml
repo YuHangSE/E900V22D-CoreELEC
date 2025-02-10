@@ -3,15 +3,14 @@ name: Build Image
 on:
   workflow_dispatch:
     inputs:
-      message:
-        description: 'Optional message for the run'
-        required: false
-        default: 'Manual run'
+      version:
+        description: 'The CoreELEC version to build'
+        required: true
+        default: '21.2-Omega'
         
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -24,6 +23,8 @@ jobs:
       
 
       - name: Run Build
+        env:
+          VERSION: ${{ github.event.inputs.version }}
         run: |
           cd /home/runner/work/E900V22D-CoreELEC/E900V22D-CoreELEC
           sh build.sh
