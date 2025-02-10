@@ -27,8 +27,8 @@ jobs:
           VERSION: ${{ github.event.inputs.version }}
         run: |
           cd /home/runner/work/E900V22D-CoreELEC/E900V22D-CoreELEC
-          sh build.sh
-          
+          sh build.sh $VERSION
+
       - name: Export Image
         uses: actions/upload-artifact@v4
         with:
