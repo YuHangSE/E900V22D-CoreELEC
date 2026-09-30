@@ -30,7 +30,7 @@ echo "    DT_ID    = ${DT_ID}"
 echo "    DTB_FILE = ${DTB_FILE}"
 
 # 检查 dtb 源文件是否存在
-if [ ! -f "${REPO_ROOT}/common-files${DTB_FILE}" ]; then
+if [ ! -f "${REPO_ROOT}/common-files/${DTB_FILE}" ]; then
     echo "❌ 未找到 dtb 文件: ${REPO_ROOT}/common-files/${DTB_FILE}"
     exit 1
 fi
