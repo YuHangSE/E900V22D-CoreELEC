@@ -1,0 +1,46 @@
+name: Build Update Tar
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'The CoreELEC version to build'
+        required: true
+        default: '21.3-Omega'
+      dt_id:
+        description: 'DT_ID to replace (filename without .dtb, in device_trees/)'
+        required: true
+        default: 'g12a_s905x2_2g'
+      dtb_file:
+        description: 'Source dtb file path in repo'
+        required: false
+        default: 'e900v22d.dtb'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up environment
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y wget tar squashfs-tools
+
+      - name: Run Build Update
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+          DT_ID: ${{ github.event.inputs.dt_id }}
+          DTB_FILE: ${{ github.event.inputs.dtb_file }}
+        run: |
+          chmod +x build_update.sh
+          bash build_update.sh "$VERSION" "$DT_ID"
+
+      - name: Export Update Tar
+        uses: actions/upload-artifact@v4
+        with:
+          name: Update-Tar & SHA256
+          path: |
+            ${{ github.workspace }}/update_build/*-custom.tar
+            ${{ github.workspace }}/update_build/*-custom.tar.sha256
