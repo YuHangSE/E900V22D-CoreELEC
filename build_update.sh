@@ -41,7 +41,7 @@ mkdir -p "${WORKDIR}"
 cd "${WORKDIR}"
 
 echo "==> [1/8] 下载官方 update.tar: ${SRC_TAR}"
-wget -q --show-progress -O "${SRC_TAR}" "${SRC_URL}"
+wget -q -O "${SRC_TAR}" "${SRC_URL}"
 
 echo "==> [2/8] 解包 tar"
 tar -xf "${SRC_TAR}"
