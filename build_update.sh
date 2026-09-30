@@ -78,15 +78,16 @@ echo "==> [5/8] 应用其它魔改"
 # 示例：
 echo "Copying fs-resize script"
 if [ -f "${REPO_ROOT}/common-files/fs-resize" ]; then
+    mkdir -p squashfs-root/usr/lib/libreelec/
     cp -f "${REPO_ROOT}/common-files/fs-resize" squashfs-root/usr/lib/libreelec/fs-resize
     chown root:root squashfs-root/usr/lib/libreelec/fs-resize
     chmod 0755 squashfs-root/usr/lib/libreelec/fs-resize
 fi
 #
 echo "Copying hwdb files"
-if [ -f "${REPO_ROOT}/common-files\CMCC_Voice_Remote.hwdb" ]; then
+if [ -f "${REPO_ROOT}/common-files/CMCC_Voice_Remote.hwdb" ]; then
     mkdir -p squashfs-root/usr/config/hwdb.d
-    cp -f "${REPO_ROOT}/common-files\CMCC_Voice_Remote.hwdb" squashfs-root/usr/config/hwdb.d/
+    cp -f "${REPO_ROOT}/common-files/CMCC_Voice_Remote.hwdb" squashfs-root/usr/config/hwdb.d/
     chown root:root squashfs-root/usr/config/hwdb.d/CMCC_Voice_Remote.hwdb
     chmod 0644 squashfs-root/usr/config/hwdb.d/CMCC_Voice_Remote.hwdb
 fi
@@ -97,9 +98,9 @@ fi
 systemd_path="squashfs-root/usr/lib/systemd/system"
 firmware_path="squashfs-root/usr/lib/kernel-overlays/base/lib/firmware"
 echo "Copying firmware files (Symbolic links)"
-sudo ln -s ../rtl_bt/rtl8761b_config.bin "${firmware_path}/rtlbt/rtl8761b_config"
-sudo ln -s ../rtl_bt/rtl8761b_fw.bin "${firmware_path}/rtlbt/rtl8761b_fw"
-sudo ln -s ../rtkbt-firmware-aml.service "${systemd_path}/multi-user.target.wants/rtkbt-firmware-aml.service"
+ln -s ../rtl_bt/rtl8761b_config.bin "${firmware_path}/rtlbt/rtl8761b_config"
+ln -s ../rtl_bt/rtl8761b_fw.bin "${firmware_path}/rtlbt/rtl8761b_fw"
+ln -s ../rtkbt-firmware-aml.service "${systemd_path}/multi-user.target.wants/rtkbt-firmware-aml.service"
 # ===== 魔改结束 =====
 
 echo "==> [6/8] 重新打包 SYSTEM (SquashFS)"
@@ -119,4 +120,3 @@ sha256sum "${OUT_TAR}" > "${OUT_TAR}.sha256"
 echo ""
 echo "✅ 构建完成:"
 echo "   ${PWD}/${OUT_TAR}"
-e
