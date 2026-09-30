@@ -35,7 +35,7 @@ jobs:
           DTB_FILE: ${{ github.event.inputs.dtb_file }}
         run: |
           chmod +x build_update.sh
-          bash build_update.sh "$VERSION" "$DT_ID"
+          sudo bash build_update.sh "$VERSION" "$DT_ID"
 
       - name: Export Update Tar
         uses: actions/upload-artifact@v4
