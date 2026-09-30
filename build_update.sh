@@ -49,7 +49,7 @@ tar -xf "${SRC_TAR}"
 echo "==> [3/8] 解压 SYSTEM (SquashFS)"
 cd "${TOP_DIR}/target"
 rm -rf squashfs-root
-unsquashfs -d squashfs-root SYSTEM
+sudo unsquashfs -d squashfs-root SYSTEM
 
 echo "==> [4/8] 替换 dtb: ${DT_ID}.dtb"
 DTB_DIR="squashfs-root/usr/share/bootloader/device_trees"
@@ -103,14 +103,14 @@ ln -s ../rtkbt-firmware-aml.service "${systemd_path}/multi-user.target.wants/rtk
 
 echo "==> [6/8] 重新打包 SYSTEM (SquashFS)"
 rm -f SYSTEM
-mksquashfs squashfs-root SYSTEM \
+sudo mksquashfs squashfs-root SYSTEM \
     -comp lzo -Xalgorithm lzo1x_999 -Xcompression-level 9 -b 524288 -no-xattrs
 
 md5sum SYSTEM > SYSTEM.md5
 
 echo "==> [7/8] 重新打包为 tar"
 cd "${WORKDIR}"
-tar -cf "${OUT_TAR}" "${TOP_DIR}"
+sudo tar -cf "${OUT_TAR}" "${TOP_DIR}"
 
 echo "==> [8/8] 生成 SHA256"
 sha256sum "${OUT_TAR}" > "${OUT_TAR}.sha256"
