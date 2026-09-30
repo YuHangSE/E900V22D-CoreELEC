@@ -106,7 +106,7 @@ rm -f SYSTEM
 mksquashfs squashfs-root SYSTEM \
     -comp lzo -Xalgorithm lzo1x_999 -Xcompression-level 9 -b 524288 -no-xattrs -noappend
 
-md5sum SYSTEM > SYSTEM.md5
+cd .. && md5sum target/SYSTEM > target/SYSTEM.md5
 
 echo "==> [7/8] 重新打包为 tar"
 cd "${WORKDIR}"
