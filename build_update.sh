@@ -104,13 +104,13 @@ ln -s ../rtkbt-firmware-aml.service "${systemd_path}/multi-user.target.wants/rtk
 echo "==> [6/8] 重新打包 SYSTEM (SquashFS)"
 rm -f SYSTEM
 mksquashfs squashfs-root SYSTEM \
-    -comp lzo -Xalgorithm lzo1x_999 -Xcompression-level 9 -b 524288 -no-xattrs
+    -comp lzo -Xalgorithm lzo1x_999 -Xcompression-level 9 -b 524288 -no-xattrs -noappend
 
 md5sum SYSTEM > SYSTEM.md5
 
 echo "==> [7/8] 重新打包为 tar"
 cd "${WORKDIR}"
-tar -cf "${OUT_TAR}" "${TOP_DIR}"
+tar -cf "${OUT_TAR}" --exclude="${TOP_DIR}/target/squashfs-root" "${TOP_DIR}"
 
 echo "==> [8/8] 生成 SHA256"
 sha256sum "${OUT_TAR}" > "${OUT_TAR}.sha256"
